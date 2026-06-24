@@ -1,0 +1,692 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>pc27414u202319440.API</name>
+    </assembly>
+    <members>
+        <member name="T:Pc27414u202319440.API.Services.Application.Errors.CreateRentalOrderError">
+            <summary>
+            Errors that can occur when creating a rental order.
+            </summary>
+        </member>
+        <member name="F:Pc27414u202319440.API.Services.Application.Errors.CreateRentalOrderError.DuplicateCustomerAndVehicle">
+            <summary>A rental order with the same customer and vehicle already exists.</summary>
+        </member>
+        <member name="F:Pc27414u202319440.API.Services.Application.Errors.CreateRentalOrderError.PlateBelongsToDifferentVehicle">
+            <summary>The provided plate is already associated with a different vehicle.</summary>
+        </member>
+        <member name="F:Pc27414u202319440.API.Services.Application.Errors.CreateRentalOrderError.UnexpectedError">
+            <summary>An unexpected error occurred during the operation.</summary>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Application.Internal.CommandServices.RentalOrderCommandService">
+            <summary>
+            Application service for handling rental order creation commands.
+            </summary>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Application.Internal.CommandServices.RentalOrderCommandService.#ctor(Pc27414u202319440.API.Services.Domain.Repositories.IRentalOrderRepository,Pc27414u202319440.API.Shared.Domain.Repositories.IUnitOfWork,Microsoft.Extensions.Logging.ILogger{Pc27414u202319440.API.Services.Application.Internal.CommandServices.RentalOrderCommandService})">
+            <summary>
+            Application service for handling rental order creation commands.
+            </summary>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Application.Internal.CommandServices.RentalOrderCommandService.Handle(Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Application.Services.IRentalOrderCommandService">
+            <summary>
+            Command service contract for rental order operations.
+            </summary>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Application.Services.IRentalOrderCommandService.Handle(Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand,System.Threading.CancellationToken)">
+            <summary>
+            Handles the create rental order command.
+            </summary>
+            <param name="command">Creation command.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>A result containing the created rental order or an error.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder">
+            <summary>
+            Rental order aggregate root.
+            </summary>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+            <summary>
+            Audit extension for the rental order aggregate.
+            </summary>
+        </member>
+        <member name="F:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.CustomerVehicleUniqueConstraint">
+            <summary>
+            Database unique constraint name for customer and vehicle pairs.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.#ctor">
+            <summary>
+            EF Core parameterless constructor.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.#ctor(Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand)">
+            <summary>
+            Creates a rental order from a creation command.
+            </summary>
+            <param name="command">Creation command.</param>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.Id">
+            <summary>Gets the rental order identifier.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.Customer">
+            <summary>Gets the customer name.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.VehiclesId">
+            <summary>Gets the selected vehicle identifier.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.Plate">
+            <summary>Gets the vehicle plate.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.RequestedAt">
+            <summary>Gets the requested rental date and time.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.Address">
+            <summary>Gets the delivery address.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.Amount">
+            <summary>Gets the rental amount.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.CreatedAt">
+            <summary>Gets the creation timestamp.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder.UpdatedAt">
+            <summary>Gets the last update timestamp.</summary>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand">
+            <summary>
+            Command message for creating a new rental order.
+            </summary>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand.#ctor(Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Customer,Pc27414u202319440.API.Services.Domain.Model.ValueObjects.EVehicles,Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Plate,System.DateTime,Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Address,Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Amount)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand"/> record.
+            </summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand.Customer">
+            <summary>Gets the customer name.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand.VehiclesId">
+            <summary>Gets the selected vehicle identifier.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand.Plate">
+            <summary>Gets the vehicle plate.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand.RequestedAt">
+            <summary>Gets the requested rental date and time.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand.Address">
+            <summary>Gets the delivery address.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.Commands.CreateRentalOrderCommand.Amount">
+            <summary>Gets the rental amount.</summary>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Address">
+            <summary>
+            Represents a rental delivery address owned by a rental order.
+            </summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Address.Street">
+            <summary>
+            Gets the street name.
+            </summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Address.City">
+            <summary>
+            Gets the city name.
+            </summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Address.PostalCode">
+            <summary>
+            Gets the postal code.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Address.Create(System.String,System.String,System.String)">
+            <summary>
+            Creates a validated address value object.
+            </summary>
+            <param name="street">Street value.</param>
+            <param name="city">City value.</param>
+            <param name="postalCode">Postal code value.</param>
+            <returns>Validated address.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Amount">
+            <summary>
+            Represents a rental order monetary amount.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Amount.#ctor(System.Int32)">
+            <summary>
+            Represents a rental order monetary amount.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Amount.Create(System.Int32)">
+            <summary>
+            Creates a validated amount value object.
+            </summary>
+            <param name="value">Raw amount value.</param>
+            <returns>Validated amount.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Customer">
+            <summary>
+            Represents a rental order customer name.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Customer.#ctor(System.String)">
+            <summary>
+            Represents a rental order customer name.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Customer.Create(System.String)">
+            <summary>
+            Creates a validated customer value object.
+            </summary>
+            <param name="value">Raw customer name.</param>
+            <returns>Validated customer.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.EVehicles">
+            <summary>
+            Represents the vehicle catalog offered by Hertz Peru.
+            </summary>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Plate">
+            <summary>
+            Represents a vehicle license plate.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Plate.#ctor(System.String)">
+            <summary>
+            Represents a vehicle license plate.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Model.ValueObjects.Plate.Create(System.String)">
+            <summary>
+            Creates a validated plate value object.
+            </summary>
+            <param name="value">Raw plate value.</param>
+            <returns>Validated plate or null when omitted.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Domain.Repositories.IRentalOrderRepository">
+            <summary>
+            Rental order repository contract.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Repositories.IRentalOrderRepository.FindByCustomerAndVehiclesIdAsync(System.String,Pc27414u202319440.API.Services.Domain.Model.ValueObjects.EVehicles,System.Threading.CancellationToken)">
+            <summary>
+            Finds a rental order by customer and vehicle identifier.
+            </summary>
+            <param name="customer">Customer name.</param>
+            <param name="vehiclesId">Vehicle identifier.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>The rental order if found; otherwise null.</returns>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Domain.Repositories.IRentalOrderRepository.FindVehiclesIdByPlateAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Finds the vehicle identifier associated with a plate.
+            </summary>
+            <param name="plate">Vehicle plate.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>The vehicle identifier if found; otherwise null.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Infrastructure.Persistence.EFC.Repositories.RentalOrderRepository">
+            <summary>
+            Entity Framework repository for rental order persistence.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Infrastructure.Persistence.EFC.Repositories.RentalOrderRepository.#ctor(Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.AppDbContext)">
+            <summary>
+            Entity Framework repository for rental order persistence.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Infrastructure.Persistence.EFC.Repositories.RentalOrderRepository.FindByCustomerAndVehiclesIdAsync(System.String,Pc27414u202319440.API.Services.Domain.Model.ValueObjects.EVehicles,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Infrastructure.Persistence.EFC.Repositories.RentalOrderRepository.FindVehiclesIdByPlateAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Interfaces.REST.RentalOrdersController">
+            <summary>
+            REST controller for rental order operations.
+            </summary>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Interfaces.REST.RentalOrdersController.#ctor(Pc27414u202319440.API.Services.Application.Services.IRentalOrderCommandService,Microsoft.Extensions.Logging.ILogger{Pc27414u202319440.API.Services.Interfaces.REST.RentalOrdersController})">
+            <summary>
+            REST controller for rental order operations.
+            </summary>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Interfaces.REST.RentalOrdersController.CreateRentalOrder(Pc27414u202319440.API.Services.Interfaces.REST.Resources.CreateRentalOrderResource,System.Threading.CancellationToken)">
+            <summary>
+            Creates a rental order.
+            </summary>
+            <param name="resource">Creation request payload.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>The created rental order resource.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Interfaces.REST.Resources.AddressResource">
+            <summary>
+            Address representation exposed by the REST API.
+            </summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.AddressResource.Street">
+            <summary>Gets or sets the street name.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.AddressResource.City">
+            <summary>Gets or sets the city name.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.AddressResource.PostalCode">
+            <summary>Gets or sets the postal code.</summary>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Interfaces.REST.Resources.CreateRentalOrderResource">
+            <summary>
+            Request payload for creating a rental order.
+            </summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.CreateRentalOrderResource.Customer">
+            <summary>Gets or sets the customer name.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.CreateRentalOrderResource.VehiclesId">
+            <summary>Gets or sets the selected vehicle identifier.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.CreateRentalOrderResource.Plate">
+            <summary>Gets or sets the vehicle plate.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.CreateRentalOrderResource.RequestedAt">
+            <summary>Gets or sets the requested rental date and time.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.CreateRentalOrderResource.Address">
+            <summary>Gets or sets the delivery address.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.CreateRentalOrderResource.Amount">
+            <summary>Gets or sets the rental amount.</summary>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Interfaces.REST.Resources.RentalOrderResource">
+            <summary>
+            Rental order representation returned by the REST API.
+            </summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.RentalOrderResource.RentalOrderId">
+            <summary>Gets or sets the rental order identifier.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.RentalOrderResource.Customer">
+            <summary>Gets or sets the customer name.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.RentalOrderResource.VehiclesId">
+            <summary>Gets or sets the selected vehicle identifier.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.RentalOrderResource.Plate">
+            <summary>Gets or sets the vehicle plate.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.RentalOrderResource.RequestedAt">
+            <summary>Gets or sets the requested rental date and time.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Services.Interfaces.REST.Resources.RentalOrderResource.Address">
+            <summary>Gets or sets the delivery address.</summary>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Interfaces.REST.Transform.ActionResultFromCreateRentalOrderResultAssembler">
+            <summary>
+            Assembles HTTP action results from rental order command outcomes.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Interfaces.REST.Transform.ActionResultFromCreateRentalOrderResultAssembler.ToActionResultFromCreateRentalOrderResult(Pc27414u202319440.API.Shared.Application.Patterns.Result{Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder,Pc27414u202319440.API.Services.Application.Errors.CreateRentalOrderError},Microsoft.AspNetCore.Mvc.ControllerBase)">
+            <summary>
+            Maps a command result to an HTTP action result.
+            </summary>
+            <param name="result">Application result.</param>
+            <param name="controller">Controller instance.</param>
+            <returns>HTTP action result.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Interfaces.REST.Transform.CreateRentalOrderCommandFromResourceAssembler">
+            <summary>
+            Translates REST resources into domain commands.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Interfaces.REST.Transform.CreateRentalOrderCommandFromResourceAssembler.ToCommandFromResource(Pc27414u202319440.API.Services.Interfaces.REST.Resources.CreateRentalOrderResource)">
+            <summary>
+            Maps a creation resource to a domain command.
+            </summary>
+            <param name="resource">Creation resource.</param>
+            <returns>Domain command.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Services.Interfaces.REST.Transform.RentalOrderResourceFromEntityAssembler">
+            <summary>
+            Translates rental order aggregates into REST resources.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Services.Interfaces.REST.Transform.RentalOrderResourceFromEntityAssembler.ToResourceFromEntity(Pc27414u202319440.API.Services.Domain.Model.Aggregates.RentalOrder)">
+            <summary>
+            Maps a rental order aggregate to a response resource.
+            </summary>
+            <param name="rentalOrder">Rental order aggregate.</param>
+            <returns>Response resource without amount or audit fields.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Application.Patterns.Result`2">
+            <summary>
+            Represents the outcome of an operation that can succeed with a value or fail with an error.
+            </summary>
+            <typeparam name="TValue">The type of the successful result value.</typeparam>
+            <typeparam name="TError">The type of the error information.</typeparam>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Application.Patterns.Result`2.Success">
+            <summary>
+            Represents a successful operation outcome.
+            </summary>
+            <param name="Value">The resulting value from the successful operation.</param>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Application.Patterns.Result`2.Success.#ctor(`0)">
+            <summary>
+            Represents a successful operation outcome.
+            </summary>
+            <param name="Value">The resulting value from the successful operation.</param>
+        </member>
+        <member name="P:Pc27414u202319440.API.Shared.Application.Patterns.Result`2.Success.Value">
+            <summary>The resulting value from the successful operation.</summary>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Application.Patterns.Result`2.Failure">
+            <summary>
+            Represents a failed operation outcome.
+            </summary>
+            <param name="Error">The error information from the failed operation.</param>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Application.Patterns.Result`2.Failure.#ctor(`1)">
+            <summary>
+            Represents a failed operation outcome.
+            </summary>
+            <param name="Error">The error information from the failed operation.</param>
+        </member>
+        <member name="P:Pc27414u202319440.API.Shared.Application.Patterns.Result`2.Failure.Error">
+            <summary>The error information from the failed operation.</summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Shared.Application.Patterns.Result`2.IsSuccess">
+            <summary>
+            Determines whether the result represents a successful outcome.
+            </summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Shared.Application.Patterns.Result`2.IsFailure">
+            <summary>
+            Determines whether the result represents a failed outcome.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Application.Patterns.Result`2.Fold``1(System.Func{`0,``0},System.Func{`1,``0})">
+            <summary>
+            Applies a function to either the success or failure case.
+            </summary>
+            <typeparam name="TResult">The type of the final result.</typeparam>
+            <param name="onSuccess">Function to apply if successful.</param>
+            <param name="onFailure">Function to apply if failed.</param>
+            <returns>The result of applying the appropriate function.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Domain.Model.IAuditableEntity">
+            <summary>
+            Marks an entity as carrying audit timestamps managed by the persistence layer.
+            </summary>
+            <remarks>
+            Any entity in any bounded context that implements this interface will automatically
+            have <see cref="P:Pc27414u202319440.API.Shared.Domain.Model.IAuditableEntity.CreatedAt"/> set once on first persistence and <see cref="P:Pc27414u202319440.API.Shared.Domain.Model.IAuditableEntity.UpdatedAt"/>
+            refreshed on every subsequent save, via <c>AuditableEntityInterceptor</c>.
+            </remarks>
+        </member>
+        <member name="P:Pc27414u202319440.API.Shared.Domain.Model.IAuditableEntity.CreatedAt">
+            <summary>
+            Gets or sets the UTC timestamp when the entity was first persisted.
+            </summary>
+        </member>
+        <member name="P:Pc27414u202319440.API.Shared.Domain.Model.IAuditableEntity.UpdatedAt">
+            <summary>
+            Gets or sets the UTC timestamp when the entity was last saved.
+            </summary>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Domain.Repositories.IBaseRepository`1">
+            <summary>
+            Base repository interface for all repositories.
+            </summary>
+            <typeparam name="TEntity">The entity type.</typeparam>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Domain.Repositories.IBaseRepository`1.AddAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+            Adds an entity to the repository.
+            </summary>
+            <param name="entity">Entity to add.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Domain.Repositories.IBaseRepository`1.FindByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Finds an entity by identifier.
+            </summary>
+            <param name="id">Entity identifier.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>The entity if found; otherwise null.</returns>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Domain.Repositories.IBaseRepository`1.Update(`0)">
+            <summary>
+            Updates an entity.
+            </summary>
+            <param name="entity">Entity to update.</param>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Domain.Repositories.IBaseRepository`1.Remove(`0)">
+            <summary>
+            Removes an entity.
+            </summary>
+            <param name="entity">Entity to remove.</param>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Domain.Repositories.IBaseRepository`1.ListAsync(System.Threading.CancellationToken)">
+            <summary>
+            Lists all entities.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>All entities.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Domain.Repositories.IUnitOfWork">
+            <summary>
+            Unit of work interface.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Domain.Repositories.IUnitOfWork.CompleteAsync(System.Threading.CancellationToken)">
+            <summary>
+            Commits changes to the database.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Infrastructure.Interfaces.ASP.Configuration.Extensions.StringExtensions">
+            <summary>
+            String utility extensions for ASP.NET Core infrastructure.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Interfaces.ASP.Configuration.Extensions.StringExtensions.ToKebabCase(System.String)">
+            <summary>
+            Converts a PascalCase or camelCase string to kebab-case.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The kebab-case representation.</returns>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Interfaces.ASP.Configuration.Extensions.StringExtensions.KebabCaseRegex">
+            <remarks>
+            Pattern:<br/>
+            <code>(?&lt;!^)([A-Z][a-z]|(?&lt;=[a-z])[A-Z])</code><br/>
+            Options:<br/>
+            <code>RegexOptions.Compiled</code><br/>
+            Explanation:<br/>
+            <code>
+            ○ Zero-width negative lookbehind.<br/>
+                ○ Match if at the beginning of the string.<br/>
+            ○ 1st capture group.<br/>
+                ○ Match with 2 alternative expressions, atomically.<br/>
+                    ○ Match a sequence of expressions.<br/>
+                        ○ Match a character in the set [A-Z].<br/>
+                        ○ Match a character in the set [a-z].<br/>
+                    ○ Match a sequence of expressions.<br/>
+                        ○ Zero-width positive lookbehind.<br/>
+                            ○ Match a character in the set [a-z] right-to-left.<br/>
+                        ○ Match a character in the set [A-Z].<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Infrastructure.Interfaces.ASP.Configuration.KebabCaseRouteNamingConvention">
+            <summary>
+            Rewrites controller route tokens to kebab-case equivalents.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Interfaces.ASP.Configuration.KebabCaseRouteNamingConvention.Apply(Microsoft.AspNetCore.Mvc.ApplicationModels.ControllerModel)">
+            <inheritdoc />
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.AppDbContext">
+            <summary>
+            Application database context for the Hertz schema.
+            </summary>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.AppDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.AppDbContext})">
+            <summary>
+            Application database context for the Hertz schema.
+            </summary>
+            <remarks>Dhilsen Armil Mallqui Vilca</remarks>
+        </member>
+        <member name="P:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.AppDbContext.RentalOrders">
+            <summary>
+            Gets the rental orders set.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.AppDbContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.AppDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions.ModelBuilderExtensions">
+            <summary>
+            Model builder extensions for database naming conventions.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions.ModelBuilderExtensions.UseSnakeCaseNamingConvention(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Applies snake case and plural table naming conventions.
+            </summary>
+            <param name="builder">The model builder.</param>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions.StringExtensions">
+            <summary>
+            String extensions for persistence naming conventions.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions.StringExtensions.ToSnakeCase(System.String)">
+            <summary>
+            Converts a string to snake case.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The snake case representation.</returns>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions.StringExtensions.ToPlural(System.String)">
+            <summary>
+            Pluralizes a string.
+            </summary>
+            <param name="text">The string to pluralize.</param>
+            <returns>The pluralized string.</returns>
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Interceptors.AuditableEntityInterceptor">
+            <summary>
+            EF Core interceptor that automatically populates audit timestamps.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Interceptors.AuditableEntityInterceptor.SavingChanges(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32})">
+            <inheritdoc />
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Interceptors.AuditableEntityInterceptor.SavingChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.BaseRepository`1">
+            <summary>
+            Generic base repository providing CRUD operations.
+            </summary>
+            <typeparam name="TEntity">The entity type.</typeparam>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.BaseRepository`1.#ctor(Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.AppDbContext)">
+            <summary>
+            Generic base repository providing CRUD operations.
+            </summary>
+            <typeparam name="TEntity">The entity type.</typeparam>
+        </member>
+        <member name="F:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.BaseRepository`1.Context">
+            <summary>
+            Gets the EF Core database context.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.BaseRepository`1.AddAsync(`0,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.BaseRepository`1.FindByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.BaseRepository`1.Update(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.BaseRepository`1.Remove(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.BaseRepository`1.ListAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.UnitOfWork">
+            <summary>
+            Unit of work implementation for coordinating database transactions.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.UnitOfWork.#ctor(Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Configuration.AppDbContext)">
+            <summary>
+            Unit of work implementation for coordinating database transactions.
+            </summary>
+        </member>
+        <member name="M:Pc27414u202319440.API.Shared.Infrastructure.Persistence.EFC.Repositories.UnitOfWork.CompleteAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.KebabCaseRegex_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the KebabCaseRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.KebabCaseRegex_0.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.KebabCaseRegex_0.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.KebabCaseRegex_0.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.KebabCaseRegex_0.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.KebabCaseRegex_0.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.KebabCaseRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.KebabCaseRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.KebabCaseRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
+            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
+            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
+        </member>
+    </members>
+</doc>
